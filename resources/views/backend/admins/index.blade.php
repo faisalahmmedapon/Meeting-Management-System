@@ -23,6 +23,11 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Post Code</th>
+                            <th>Location</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Distance</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Role Names</th>
@@ -33,12 +38,16 @@
                         @foreach ($admins as $key => $admin)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->post_code }}</td>
+                                <td>{{ $admin->location }}</td>
+                                <td>{{ $admin->latitude }}</td>
+                                <td>{{ $admin->longitude }}</td>
+                                <td> 0KM </td>
                                 <td>{{ $admin->email }}</td>
                                 <td>
 
                                     @foreach ($admin->getRoleNames() as $adminName)
-                                          <span class="badge bg-success"> {{ $adminName ?? '' }} </span>
+                                        <span class="badge bg-success"> {{ $adminName ?? '' }} </span>
                                     @endforeach
 
                                 </td>

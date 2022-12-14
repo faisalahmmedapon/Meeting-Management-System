@@ -55,18 +55,40 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        // return $request->all();
         $this->validate($request, [
-            'name' => 'required',
+            'post_code' => 'required',
+            'location' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'email' => 'required|email|unique:admins,email',
             'password' => 'required|confirmed',
             'roles' => 'required'
         ]);
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-        $user = Admin::create($input);
-        $user->assignRole($request->input('roles'));
-        return redirect()->route('admins.index')->with('success', 'User created successfully.');
+        $postCode = $request->post_code;
+
+        $data =  Postcode::query($postCode);
+        if($data->isNotEmpty()){
+            if ($data[0]->postcode) {
+                // return $data[0]->postcode;
+                $input = $request->all();
+                $input['password'] = Hash::make($input['password']);
+                $user = Admin::create($input);
+                $user->assignRole($request->input('roles'));
+                return redirect()->route('admins.index')->with('success', 'User created successfully.');
+            } else {
+                return "Post code not match using uk poscode";
+            }
+        }else{
+            return "Post code not match using uk poscode";
+        }
+
+        // return $data[0]->postcode;
+
+
     }
 
     /**
@@ -170,10 +192,9 @@ class AdminController extends Controller
 
 
         $data =  Postcode::query($postCode);
-            return response()->json([
-                'status' => "200",
-                'data' => $data
-            ]);
-
+        return response()->json([
+            'status' => "200",
+            'data' => $data
+        ]);
     }
 }
