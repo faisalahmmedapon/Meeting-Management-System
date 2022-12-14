@@ -63,6 +63,8 @@ class AdminController extends Controller
             'location' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            // 'phone' => 'required|regex:/^((\+44)?[\s-]?)?\(?[2-9]\d\d\)?[\s-]?[2-9]\d\d[\s-]?\d\d\d\d/',
+            'phone' => 'required|regex:/^((\+44)?[\s-]?)?\(?[2-9]\d\d\)?[\s-]?[2-9]\d\d[\s-]?\d\d\d\d/',
             'email' => 'required|email|unique:admins,email',
             'password' => 'required|confirmed',
             'roles' => 'required'
@@ -76,6 +78,7 @@ class AdminController extends Controller
                 // return $data[0]->postcode;
                 $input = $request->all();
                 $input['password'] = Hash::make($input['password']);
+                $input['post_code'] = $data[0]->postcode;
                 $user = Admin::create($input);
                 $user->assignRole($request->input('roles'));
                 return redirect()->route('admins.index')->with('success', 'User created successfully.');

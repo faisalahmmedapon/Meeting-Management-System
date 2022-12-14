@@ -98,7 +98,7 @@
                                     <div class="form-group p-2">
                                         <label for="phone"> Phone: </label>
                                         <input type="text" name="phone" class="form-control"
-                                            value="{{ old('phone') }}" id="phone">
+                                            value="+1(320)-924-2043" placeholder="+1(320)-924-2043" id="phone">
                                     </div>
                                 </div>
 

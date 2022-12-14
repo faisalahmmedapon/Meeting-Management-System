@@ -30,6 +30,7 @@
                             <th>Distance</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Phone</th>
                             <th>Role Names</th>
                             <th>Action</th>
                         </tr>
@@ -43,7 +44,10 @@
                                 <td>{{ $admin->latitude }}</td>
                                 <td>{{ $admin->longitude }}</td>
                                 <td> 0KM </td>
+                                <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->email }}</td>
+                                <td>{{ $admin->phone }}</td>
+
                                 <td>
 
                                     @foreach ($admin->getRoleNames() as $adminName)
@@ -80,10 +84,16 @@
                     <tfoot>
                         <tr>
                             <th>ID</th>
+                            <th>Post Code</th>
+                            <th>Location</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Distance</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Phone</th>
+                            <th>Role Names</th>
                             <th>Action</th>
-
                         </tr>
                     </tfoot>
                 </table>
