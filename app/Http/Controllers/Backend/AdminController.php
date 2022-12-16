@@ -63,8 +63,10 @@ class AdminController extends Controller
             'location' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            // 'phone' => 'required|regex:/^\+1\([0-9]{3}\)-[0-9]{3}-[0-9]{4}$/',
             // 'phone' => 'required|regex:/^((\+44)?[\s-]?)?\(?[2-9]\d\d\)?[\s-]?[2-9]\d\d[\s-]?\d\d\d\d/',
-            'phone' => 'required|regex:/^((\+44)?[\s-]?)?\(?[2-9]\d\d\)?[\s-]?[2-9]\d\d[\s-]?\d\d\d\d/',
+            // 'phone' => 'required|regex:/^([1]-)?[0-9]{3}-[0-9]{3}-[0-9]{4}$/i',
+            'phone' => 'required|regex:/^(?:\+?1[-. ]?)?\(?([2-9][0-8][0-9])\)?[-. ]?([2-9][0-9]{2})[-. ]?([0-9]{4})$/',
             'email' => 'required|email|unique:admins,email',
             'password' => 'required|confirmed',
             'roles' => 'required'
