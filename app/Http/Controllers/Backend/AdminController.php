@@ -90,13 +90,15 @@ class AdminController extends Controller
             'location' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
+            'distance' => 'required',
             // 'phone' => 'required|regex:/^\+1\([0-9]{3}\)-[0-9]{3}-[0-9]{4}$/',
             // 'phone' => 'required|regex:/^((\+44)?[\s-]?)?\(?[2-9]\d\d\)?[\s-]?[2-9]\d\d[\s-]?\d\d\d\d/',
             // 'phone' => 'required|regex:/^([1]-)?[0-9]{3}-[0-9]{3}-[0-9]{4}$/i',
-            'phone' => 'required|regex:/^(?:\+?1[-. ]?)?\(?([2-9][0-8][0-9])\)?[-. ]?([2-9][0-9]{2})[-. ]?([0-9]{4})$/',
-            'email' => 'required|email|unique:admins,email',
-            'password' => 'required|confirmed',
-            'roles' => 'required'
+            // 'phone' => 'required|regex:/^(?:\+?1[-. ]?)?\(?([2-9][0-8][0-9])\)?[-. ]?([2-9][0-9]{2})[-. ]?([0-9]{4})$/',
+            // 'landline' => 'required|regex:/^(?:\+?1[-. ]?)?\(?([2-9][0-8][0-9])\)?[-. ]?([2-9][0-9]{2})[-. ]?([0-9]{4})$/',
+            // 'email' => 'required|email|unique:admins,email',
+            // 'password' => 'required|confirmed',
+            // 'roles' => 'required'
         ]);
 
         $postCode = $request->post_code;
@@ -106,10 +108,10 @@ class AdminController extends Controller
             if ($data[0]->postcode) {
                 // return $data[0]->postcode;
                 $input = $request->all();
-                $input['password'] = Hash::make($input['password']);
+                // $input['password'] = Hash::make($input['password']);
                 $input['post_code'] = $data[0]->postcode;
                 $user = Admin::create($input);
-                $user->assignRole($request->input('roles'));
+                // $user->assignRole($request->input('roles'));
                 return redirect()->route('admins.index')->with('success', 'User created successfully.');
             } else {
                 return "Post code not match using uk poscode";

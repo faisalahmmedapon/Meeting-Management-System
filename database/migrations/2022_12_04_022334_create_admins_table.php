@@ -18,12 +18,13 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('post_code')->nullable();
             $table->text('location')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('phone')->nullable();
+            $table->string('landline')->nullable();
             $table->string('distance')->nullable();
             $table->rememberToken();
             $table->timestamps();

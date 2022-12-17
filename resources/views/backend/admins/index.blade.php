@@ -28,11 +28,12 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Distance</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            {{-- <th>Name</th>
+                            <th>Email</th> --}}
                             <th>Phone</th>
-                            <th>Role Names</th>
-                            <th>Action</th>
+                            <th>Landline</th>
+                            {{-- <th>Role Names</th>
+                            <th>Action</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -43,12 +44,17 @@
                                 <td>{{ $admin->location }}</td>
                                 <td>{{ $admin->latitude }}</td>
                                 <td>{{ $admin->longitude }}</td>
-                                <td> {{ $admin->distance ?? "" }} Miles </td>
-                                <td>{{ $admin->name }}</td>
-                                <td>{{ $admin->email }}</td>
+                                <td>
+                                    @if ($admin->distance)
+                                        {{ $admin->distance ?? '' }} Miles
+                                    @endif
+                                </td>
+                                {{-- <td>{{ $admin->name }}</td>
+                                <td>{{ $admin->email }}</td> --}}
+                                <td>{{ $admin->phone }}</td>
                                 <td>{{ $admin->phone }}</td>
 
-                                <td>
+                                {{-- <td>
 
                                     @foreach ($admin->getRoleNames() as $adminName)
                                         <span class="badge bg-success"> {{ $adminName ?? '' }} </span>
@@ -76,7 +82,7 @@
 
                                         </form>
                                     @endcan
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
 
@@ -89,11 +95,12 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Distance</th>
-                            <th>Name</th>
-                            <th>Email</th>
+                            {{-- <th>Name</th>
+                            <th>Email</th> --}}
                             <th>Phone</th>
-                            <th>Role Names</th>
-                            <th>Action</th>
+                            <th>Landline</th>
+                            {{-- <th>Role Names</th>
+                            <th>Action</th> --}}
                         </tr>
                     </tfoot>
                 </table>

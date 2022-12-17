@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <label for="name">Name: </label>
                                         <input type="text" name="name" class="form-control"
@@ -103,24 +103,24 @@
                                         <input type="text" name="email" class="form-control"
                                             value="{{ old('email') }}" id="email">
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <label for="phone"> Phone: </label>
-                                        <input type="text" name="phone" class="form-control" value="+1(320)-924-2043"
+                                        <input type="text" name="phone" class="form-control"
                                             placeholder="+1(320)-924-2043" id="phone">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group p-2">
-                                        <label for="phone"> Land Line: </label>
-                                        <input type="text" name="phone" class="form-control" value="+1(320)-924-2043"
-                                            placeholder="+1(320)-924-2043" id="phone">
+                                        <label for="landline"> Land Line: </label>
+                                        <input type="text" name="landline" class="form-control"
+                                            placeholder="+1(320)-924-2043" id="landline">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <label for="password"> Password: </label>
                                         <input type="text" name="password" class="form-control"
@@ -145,7 +145,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <button type="submit" class="btn btn-success px-5"><i
@@ -335,7 +335,7 @@
 
             const kilometers = d;
             const factor = 0.621371
-            const miles =   kilometers * factor
+            const miles = kilometers * factor
 
 
             $('#distance').val(Math.floor(miles));
@@ -370,6 +370,20 @@
                 $("#latitudeArea").removeClass("d-none");
                 $("#longtitudeArea").removeClass("d-none");
             });
+        }
+    </script>
+
+    <script>
+        var phone = $('#phone').val();
+
+        function phonenumber(phone) {
+            var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+            if (phone.match(phoneno)) {
+                return true;
+            } else {
+                alert("message");
+                return false;
+            }
         }
     </script>
 @endpush
