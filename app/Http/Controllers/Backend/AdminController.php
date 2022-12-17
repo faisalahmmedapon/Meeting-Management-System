@@ -31,6 +31,33 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
+
+        // $postcode1 = 'FK10 1AA';
+        // $postcode2 = 'FK10 1AN';
+        // $commute_mode = 'driving';
+        // $api_key = 'AIzaSyDjR14OREWodXlFSAi-S78TwQG5XhGILdg';
+        // $result    = array();
+
+        // $url = "https://maps.googleapis.com/maps/api/distancematrix/json?key=$api_key&origins=E15 3NW,london&destinations=E15 3NW,london&mode=driving&language=en-EN&sensor=false";
+
+        // $data   = @file_get_contents($url);
+        // $result = json_decode($data, true);
+        // print_r($result);
+
+
+        // $postcode1 = 'FK10 1AA';
+        // $postcode2 = 'FK10 1AN';
+        // $api_key = 'AIzaSyDjR14OREWodXlFSAi-S78TwQG5XhGILdg';
+        // $result = array();
+
+        // $url = "http://maps.googleapis.com/maps/api/distancematrix/json?key=$api_key&origins=$postcode1,+uk&destinations=$postcode2,+uk&mode=bicycling&language=en-EN&sensor=false";
+
+        // $data = @file_get_contents($url);
+
+        // $result = json_decode($data, true);
+        // print_r($result);
+
+
         $admins = Admin::all();
         return view('backend.admins.index', compact('admins'));
     }
@@ -75,7 +102,7 @@ class AdminController extends Controller
         $postCode = $request->post_code;
 
         $data =  Postcode::query($postCode);
-        if($data->isNotEmpty()){
+        if ($data->isNotEmpty()) {
             if ($data[0]->postcode) {
                 // return $data[0]->postcode;
                 $input = $request->all();
@@ -87,7 +114,7 @@ class AdminController extends Controller
             } else {
                 return "Post code not match using uk poscode";
             }
-        }else{
+        } else {
             return "Post code not match using uk poscode";
         }
 
@@ -196,10 +223,17 @@ class AdminController extends Controller
         // $location = Postcode::getPostcode($postCode);
 
 
+
         $data =  Postcode::query($postCode);
-        return response()->json([
-            'status' => "200",
-            'data' => $data
-        ]);
+        if ($data->count() >= 1) {
+            return response()->json([
+                'status' => "200",
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+                'status' => "404",
+            ]);
+        }
     }
 }

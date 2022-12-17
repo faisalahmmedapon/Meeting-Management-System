@@ -27,6 +27,7 @@ class Admin extends Authenticatable
         'location',
         'latitude',
         'longitude',
+        'distance',
     ];
 
     /**

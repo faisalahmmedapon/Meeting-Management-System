@@ -43,7 +43,7 @@
                                 <td>{{ $admin->location }}</td>
                                 <td>{{ $admin->latitude }}</td>
                                 <td>{{ $admin->longitude }}</td>
-                                <td> 0KM </td>
+                                <td> {{ $admin->distance ?? "" }} Miles </td>
                                 <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->email }}</td>
                                 <td>{{ $admin->phone }}</td>

@@ -5,6 +5,7 @@
 @endsection
 
 @push('css')
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 @endpush
 
 @section('content')
@@ -45,7 +46,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <label for="post_code">Post Code: <i
-                                                class="get_success d-none lni lni-heart-filled float-end"></i> </label>
+                                                class="get_success d-none  lni lni-checkmark-circle float-end bg-success"></i>
+                                        </label>
                                         <input type="text" name="post_code" class="form-control"
                                             value="{{ old('post_code') }}" id="post_code">
 
@@ -57,7 +59,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <div class="form-group">
+                                    <div class="form-group autocompleteArea ">
                                         <label>Location/City/Address</label>
                                         <input type="text" name="location" id="autocomplete" class="form-control"
                                             placeholder="Choose Location" value="{{ old('autocomplete') }}">
@@ -66,14 +68,23 @@
                                 <div class="col-md-6">
                                     <div class="form-group" id="latitudeArea">
                                         <label>Latitude</label>
-                                        <input type="text" id="latitude" name="latitude" class="form-control" value="{{ old('latitude') }}">
+                                        <input type="text" id="latitude" name="latitude" class="form-control"
+                                            value="{{ old('latitude') }}">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group" id="longtitudeArea">
                                         <label>Longitude</label>
-                                        <input type="text" name="longitude" id="longitude" class="form-control" value="{{ old('longitude') }}">
+                                        <input type="text" name="longitude" id="longitude" class="form-control"
+                                            value="{{ old('longitude') }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" id="distanceArea">
+                                        <label>Distance</label>
+                                        <input type="text" name="distance" id="distance" class="form-control"
+                                            value="{{ old('distance') }}">
                                     </div>
                                 </div>
 
@@ -97,8 +108,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <label for="phone"> Phone: </label>
-                                        <input type="text" name="phone" class="form-control"
-                                            value="+1(320)-924-2043" placeholder="+1(320)-924-2043" id="phone">
+                                        <input type="text" name="phone" class="form-control" value="+1(320)-924-2043"
+                                            placeholder="+1(320)-924-2043" id="phone">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group p-2">
+                                        <label for="phone"> Land Line: </label>
+                                        <input type="text" name="phone" class="form-control" value="+1(320)-924-2043"
+                                            placeholder="+1(320)-924-2043" id="phone">
                                     </div>
                                 </div>
 
@@ -153,7 +171,7 @@
 @push('js')
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjR14OREWodXlFSAi-S78TwQG5XhGILdg&libraries=places">
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
     <script>
         $(document).ready(function() {
 
@@ -171,7 +189,6 @@
                 //     alert('Sorry Post code not found')
                 // }
 
-
                 $.ajax({
                     type: "GET",
                     url: "/postCode/" + postCode,
@@ -180,80 +197,155 @@
                         // if(response == null){
                         // console.log('Data not found');
                         // }
-                        // console.log(response.data);
+                        console.log(response.status);
+
+                        if (response.status == 200) {
+                            // alert('post code match our database');
 
 
-                        var html = '';
-                        $.each(response.data, function(key, item) {
-                            // console.log(item.postcode)
-                            html += '<li class="list-group-item">' + item.postcode +
-                                ' </li>'
+                            var html = '';
+                            $.each(response.data, function(key, item) {
+                                // console.log(item.postcode)
+                                html += '<li class="list-group-item">' + item.postcode +
+                                    ' </li>'
+                                const string = item.postcode.replace(/\s/g, '')
+                                    .toLowerCase();
+                                // console.log(string);
+                                if (string === postCode) {
+                                    // alert('Sorry Post code not found')
+                                    // $(".getAllData").addClass("d-none");
+                                    $(".get_success").removeClass("d-none");
+                                    $('#latitude').val(item.latitude);
+                                    $('#longitude').val(item.longitude);
+                                    $("#latitudeArea").removeClass("d-none");
+                                    $("#longtitudeArea").removeClass("d-none");
+                                    $(".autocompleteArea").removeClass("d-none");
+                                    $(".getAllData").addClass("d-none");
+                                    GetAddress(item.latitude, item.longitude);
+                                    getDistanceFromLatLonInKm(item.latitude, item
+                                        .longitude);
+                                } else if (item.postcode === postCode) {
+                                    $(".get_success").removeClass("d-none");
+                                    $('#latitude').val(item.latitude);
+                                    $('#longitude').val(item.longitude);
+                                    $("#latitudeArea").removeClass("d-none");
+                                    $("#longtitudeArea").removeClass("d-none");
+                                    $(".autocompleteArea").removeClass("d-none");
+                                    $(".getAllData").addClass("d-none");
+                                    GetAddress(item.latitude, item.longitude);
+                                    getDistanceFromLatLonInKm(item.latitude, item
+                                        .longitude);
+                                } else {
+                                    console.log('Nothing')
+                                }
+                            });
+                            $('.getAllData').html(html);
 
-                            if (item.postcode === postCode) {
-                                // alert('Sorry Post code not found')
-                                $(".getAllData").addClass("d-none");
-                                $(".get_success").removeClass("d-none");
 
-                                $('#latitude').val(item.latitude);
-                                $('#longitude').val(item.longitude);
+                            // $('#latitude').val(item.latitude);
+                            // $('#longitude').val(item.longitude);
 
-                                $("#latitudeArea").removeClass("d-none");
-                                $("#longtitudeArea").removeClass("d-none");
-                                calculateDistance();
-                            }
-                        })
-                        $('.getAllData').html(html);
+                            // $("#latitudeArea").removeClass("d-none");
+                            // $("#longtitudeArea").removeClass("d-none");
+
+                        } else {
+                            Swal.fire({
+                                title: 'Opps!',
+                                text: "The post code dose not valid",
+                                icon: 'error',
+                                showCancelButton: false,
+                                confirmButtonColor: '#880808',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Try Again!'
+                            }).then((result) => {
+                                if (result) {
+                                    $('#latitude').val("");
+                                    $('#longitude').val("");
+                                    $('#autocomplete').val("");
+                                    $('#distance').val("");
+
+                                    // $(".getAllData").addClass("d-none");
+                                }
+                            })
+                        }
                     }
                 });
+
             });
+        });
 
-            function calculateDistance() {
-                var to = "Dhaka, Bangladesh";
-                var from =  $('#autocomplete').val();;
-                var distance = new google.maps.DistanceMatrixService();
-                distance.getDistanceMatrix({
-                    origins: [to],
-                    destinations: [from],
-                    travelMode: google.maps.travelMode.DRIVING,
-                    unitSystem: google.maps.unitSystem.metric,
-                    avoidHighways: false,
-                    avoidTolls: false
-                }, callback);
-            }
 
-            function callback(respanse, status) {
-                if (status != google.maps.DistanceMatrixStatus.ok) {
-                    console.log('Somthing went wrong');
-                } else {
-                    if (respanse.rows[0].elements[0].status == "ZERO_RESULTS") {
-                        console.log("NO RODES")
-                    } else {
-                        var ddddddd = respanse.rows[0].elements[0].distance;
-                        console.log(ddddddd);
+        // const dddd = $('#post_code').val();
+
+        // if (dddd == "") {
+        //     Swal.fire({
+        //         title: 'Opps!',
+        //         text: "The post code dose not valid",
+        //         icon: 'error',
+        //         showCancelButton: false,
+        //         confirmButtonColor: '#880808',
+        //         cancelButtonColor: '#d33',
+        //         confirmButtonText: 'Try Again!'
+        //     }).then((result) => {
+        //         if (result) {
+        //             $('#latitude').val("");
+        //             $('#longitude').val("");
+        //             $('#autocomplete').val("");
+
+        //             // $(".getAllData").addClass("d-none");
+        //         }
+        //     })
+        // }
+
+
+        function GetAddress(lat, lng) {
+            var latlng = new google.maps.LatLng(lat, lng);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                'latLng': latlng
+            }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        //alert("Location: " + results[1].formatted_address);
+                        // var input = document.getElementById('autocomplete');
+                        $('#autocomplete').val(results[1].formatted_address);
                     }
                 }
-            }
+            });
+        }
 
-            // function calculateDistance() {
-            //     // try {
-            //     //     var glatlng1 = new GLatLng(51.449904, 0.308232);
-            //     //     var glatlng2 = new GLatLng(51.448392, 0.30784);
-            //     //     var miledistance = glatlng1.distanceFrom(glatlng2, 3959).toFixed(1);
-            //     //     var kmdistance = (miledistance * 1.609344).toFixed(1);
-            //     //     console.log(kmdistance);
-            //     //     //Write the value wherever you want!
-            //     //     // $('#mile_distance').html(miledistance);
-            //     // } catch (error) {
-            //     //     alert(error);
-            //     // }
 
-            //     $.gproximity('Flagpole Plaza NY 10004', [40.6892282, -74.1145403], function(res) {
-            //         console.log(res)
-            //         // $('.map').html(res + "meter");
-            //     });
-            // }
 
-        });
+        function getDistanceFromLatLonInKm(lat, lon) {
+            const EARTH_RADIUS = 6371; // Radius of the earth in km
+            // Here's where you would add the value dynamically from the DB.
+            // I'm using classic ASP here just as an example. You'll have to
+            // amend for your particular server side web framework, be it
+            // JSP, MVC, etc.
+            const LAT1 = "51.531331";
+            const LON1 = "0.00322";
+            // console.log(LAT1, LON1, lat, lon);
+
+            var dLat = deg2rad(lat - LAT1);
+            var dLon = deg2rad(lon - LON1);
+            var a = Math.pow(Math.sin(dLat / 2), 2) + Math.cos(deg2rad(LAT1)) * Math.cos(deg2rad(LON1)) * Math.pow(Math.sin(
+                dLon / 2), 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = EARTH_RADIUS * c; // Distance in km
+
+            const kilometers = d;
+            const factor = 0.621371
+            const miles =   kilometers * factor
+
+
+            $('#distance').val(Math.floor(miles));
+
+            console.log(Math.floor(miles));
+        }
+
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
     </script>
 
 
