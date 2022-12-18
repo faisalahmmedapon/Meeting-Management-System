@@ -109,14 +109,22 @@
                                     <div class="form-group p-2">
                                         <label for="phone"> Phone: </label>
                                         <input type="text" name="phone" class="form-control"
-                                            placeholder="+1(320)-924-2043" id="phone">
+                                            placeholder="+17975777666||+447975777666" id="phone">
+
+                                        <span class="phone_valid d-none text-success"> Phone is valid </span> <span
+                                            class="phone_not_valid d-none text-danger"> Phone is
+                                            not valid </span>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group p-2">
                                         <label for="landline"> Land Line: </label>
                                         <input type="text" name="landline" class="form-control"
-                                            placeholder="+1(320)-924-2043" id="landline">
+                                            placeholder="01992 252141" id="landline">
+                                        <span class="landline_valid d-none text-success"> Landline is valid </span> <span
+                                            class="landline_not_valid d-none text-danger"> Landline is
+                                            not valid </span>
                                     </div>
                                 </div>
 
@@ -197,7 +205,7 @@
                         // if(response == null){
                         // console.log('Data not found');
                         // }
-                        console.log(response.status);
+                        // console.log(response.status);
 
                         if (response.status == 200) {
                             // alert('post code match our database');
@@ -236,7 +244,7 @@
                                     getDistanceFromLatLonInKm(item.latitude, item
                                         .longitude);
                                 } else {
-                                    console.log('Nothing')
+                                    // console.log('Nothing')
                                 }
                             });
                             $('.getAllData').html(html);
@@ -376,15 +384,112 @@
     <script>
         var phone = $('#phone').val();
 
-        function phonenumber(phone) {
-            var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-            if (phone.match(phoneno)) {
-                return true;
+        // function phonenumber(phone) {
+        //     var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        //     if (phone.match(phoneno)) {
+        //         return true;
+        //     } else {
+        //         alert("message");
+        //         return false;
+        //     }
+        // }
+
+        // $(document).ready(function() {
+        //     $('#phone').blur(function(e) {
+        //         if (validatePhone('phone')) {
+        //             $('#spnPhoneStatus').html('Valid');
+        //             $('#spnPhoneStatus').css('color', 'green');
+        //         } else {
+        //             $('#spnPhoneStatus').html('Invalid');
+        //             $('#spnPhoneStatus').css('color', 'red');
+        //         }
+        //     });
+        // });
+
+        // function validatePhone(phone) {
+        //     var a = document.getElementById(phone).value;
+        //     var filter = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        //     if (filter.test(a)) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
+
+
+
+        // validMobileNumber("123"); //.to.equal(false);
+        // validMobileNumber("0750617250638"); //.to.equal(false);
+        // validMobileNumber("+447712368768724988"); //.to.equal(false);
+
+        // validMobileNumber("07506172506"); //.to.equal(true);
+
+        // validMobileNumber("+447506172506"); //.to.equal(true);
+
+        // validMobileNumber("00447506172506"); //.to.equal(true);
+
+        // validMobileNumber("07506189foo"); //.to.equal(false);
+        // validMobileNumber("00447555123456"); //.to.equal(true);
+        // validMobileNumber("+447676111222"); //.to.equal(true);
+        // validMobileNumber("07898888643"); //.to.equal(true);
+        // validMobileNumber("07766555432"); //.to.equal(true);
+        // validMobileNumber("07989765490"); //.to.equal(true);
+
+        // validMobileNumber("004475551&&&23456"); //.to.equal(false);
+        // validMobileNumber("-447676111222"); //.to.equal(false);
+        // validMobileNumber("09898888643"); //.to.equal(false);
+        // validMobileNumber("+449166555432"); //.to.equal(false);
+        // validMobileNumber("cats"); //.to.equal(false);
+
+        // validMobileNumber(phone);
+        // $(document).ready(function(e) {
+        //     e.preventDefault();
+        //.to.equal(false);
+
+        // $('#phone').keypress(function(event) {
+        //     var keycode = $('#phone').val();
+        //     console.log(keycode)
+        // });
+
+        $(document).click(function() {
+            var keycode = $('#phone').val();
+            // console.log(keycode)
+            keycode = keycode.replace(/\s/g, '');
+            var mobileRegEx = /^(\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
+            var mobileRegEx2 = /^(\+1\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3}$/;
+            var result = mobileRegEx.test(keycode) || mobileRegEx2.test(keycode);
+            if (result == true) {
+                $('.phone_valid').removeClass("d-none");
+                $('.phone_not_valid').addClass("d-none");
+                // console.log(result);
             } else {
-                alert("message");
-                return false;
+                $('.phone_valid').addClass("d-none");
+                $('.phone_not_valid').removeClass("d-none");
+                // console.log(result);
             }
-        }
+        });
+
+        $(document).click(function() {
+            var keycode = $('#landline').val();
+            // console.log(keycode)
+            keycode = keycode.replace(/\s/g, '');
+            // var landlineRegEx = /\s*\(?(0[1-6]{1}[0-9]{3}\)?[0-9]{6})\s*/;
+            var landlineRegEx = /^0(\d ?){10}$/;
+            var result = landlineRegEx.test(keycode);
+            if (result == true) {
+                $('.landline_valid').removeClass("d-none");
+                $('.landline_not_valid').addClass("d-none");
+                // console.log(result);
+            } else {
+                $('.landline_valid').addClass("d-none");
+                $('.landline_not_valid').removeClass("d-none");
+                // console.log(result);
+            }
+        });
+
+
+
+        // });
     </script>
 @endpush
 {{-- <li class="list-group-item">An item</li> --}}

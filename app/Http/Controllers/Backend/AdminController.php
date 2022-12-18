@@ -91,6 +91,8 @@ class AdminController extends Controller
             'latitude' => 'required',
             'longitude' => 'required',
             'distance' => 'required',
+            'landline' => 'required',
+            'phone' => 'required',
             // 'phone' => 'required|regex:/^\+1\([0-9]{3}\)-[0-9]{3}-[0-9]{4}$/',
             // 'phone' => 'required|regex:/^((\+44)?[\s-]?)?\(?[2-9]\d\d\)?[\s-]?[2-9]\d\d[\s-]?\d\d\d\d/',
             // 'phone' => 'required|regex:/^([1]-)?[0-9]{3}-[0-9]{3}-[0-9]{4}$/i',

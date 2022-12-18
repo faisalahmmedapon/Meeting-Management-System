@@ -52,7 +52,7 @@
                                 {{-- <td>{{ $admin->name }}</td>
                                 <td>{{ $admin->email }}</td> --}}
                                 <td>{{ $admin->phone }}</td>
-                                <td>{{ $admin->phone }}</td>
+                                <td>{{ $admin->landline }}</td>
 
                                 {{-- <td>
 
